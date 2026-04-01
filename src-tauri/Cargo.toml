@@ -1,0 +1,18 @@
+[package]
+name = "agent-hub"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.0", features = ["full"] }
+axum = "0.7"
+sqlx = { version = "0.8", features = ["sqlite", "runtime-tokio-rustls", "time", "uuid"] }
+uuid = { version = "1.0", features = ["v4", "serde"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+time = { version = "0.3", features = ["formatting", "parsing", "serde"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+anyhow = "1.0"
+reqwest = { version = "0.12", features = ["json"] }
+dirs = "5.0"

@@ -1,0 +1,15 @@
+.DS_Store
+
+# Rust
+src-tauri/target/
+
+# Local env / secrets
+src-tauri/.env
+
+# Local databases
+*.sqlite
+*.sqlite3
+
+# Rime user data (if ever copied here)
+*.userdb/
+*.userdb
