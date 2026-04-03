@@ -68,13 +68,29 @@ local function is_space(key)
   return r == "space" or r == "Space"
 end
 
+local function selected_candidate_text(ctx)
+  local ok, cand = pcall(function()
+    return ctx:get_selected_candidate()
+  end)
+  if not ok or not cand then
+    return nil
+  end
+  return cand.text
+end
+
 local function agent_launcher(key, env)
   local ctx = env.engine.context
   local input = ctx.input or ""
   local hub_url = env.hub_url or "http://127.0.0.1:9527/launch"
 
-  -- 1) aa -> 进入 AI 模式（space 选中置顶 ai:）
-  if is_space(key) and input == "aa" and not ctx:get_option("ai_mode") then
+  -- 1) aa -> 进入 AI 模式（选择置顶 ai:）
+  local r = key:repr()
+  local choose_first = is_space(key) or r == "1"
+  if choose_first and input == "aa" and not ctx:get_option("ai_mode") then
+    local sel = selected_candidate_text(ctx)
+    if sel ~= "ai:" then
+      return kNoop
+    end
     ctx:set_option("ai_mode", true)
     ctx:clear()
     mac_notify("AI 模式已启用")
